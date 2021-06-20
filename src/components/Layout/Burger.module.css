@@ -1,0 +1,54 @@
+.burger {
+  position: absolute;
+  left: 2rem;
+  top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+}
+.burger:focus {
+  outline: none;
+}
+
+.burger div {
+  width: 2rem;
+  height: 0.25rem;
+  background: #EFFFFA;
+  border-radius: 10px;
+  transition: all 0.3s linear;
+  position: relative;
+  transform-origin: 1px;
+}
+
+.bureger div:first-child {
+  transform: rotate(0);
+}
+
+.bureger div:nth-child(2) {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.bureger div:nth-child(3) {
+  transform: rotate(0);
+}
+
+.clicked div:first-child {
+    transform: rotate(45deg);
+  }
+  
+  .clicked div:nth-child(2) {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  
+  .clicked div:nth-child(3) {
+    transform: rotate(-45deg);
+  }
