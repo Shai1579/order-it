@@ -76,7 +76,7 @@ const AvailableMeals = () => {
   Object.keys(mealsByCategory).forEach((category) => {
     categoriesForUI.push(<Card key={category}>
       <h1 className={classes.category}>{category}</h1>
-      <ScrollMenu wheel={false} data={mealsByCategory[category]}></ScrollMenu>
+      <ScrollMenu inertiaScrollingSlowdown={0.7} inertiaScrolling={true} alignOnResize={false} wheel={false} data={mealsByCategory[category]}></ScrollMenu>
     </Card>);
   });
   return (
