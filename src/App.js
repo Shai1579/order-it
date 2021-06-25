@@ -61,7 +61,7 @@ function App() {
       ></Header>
       <main>
         <Switch>
-          <Route path="/" exact>
+          <Route path="/order-it" exact>
             <Meals></Meals>
           </Route>
           {userCtx.isLoggedIn && (
@@ -70,7 +70,7 @@ function App() {
             </Route>
           )}
           <Route path="*">
-            <Redirect to="/" />
+            <Redirect to="/order-it" />
           </Route>
         </Switch>
       </main>
