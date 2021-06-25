@@ -71,6 +71,10 @@ const Checkout = (props) => {
         <input ref={cityInputRef} value={city} onChange={(newVal) => {setCity(newVal.target.value)}}  type='text' id='city' />
         {!formInputValidity.city && <p>Please enter a valid city!</p>}
       </div>
+      <div className={props.totalClasses}>
+        <span>Total Amount</span>
+        <span>{props.totalAmount}</span>
+      </div>
       <div className={classes.actions}>
         <button type='button' onClick={props.onCancel}>
           Cancel

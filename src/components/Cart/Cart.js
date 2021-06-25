@@ -81,14 +81,14 @@ const Cart = (props) => {
   );
   const cartModalContent = (
     <Fragment>
-      {cartItems}
+       {isCheckout ? (
+        <Checkout totalAmount={totalAmount} totalClasses={classes.total} onConfirm={submitOrderHandler} onCancel={props.onClose} />
+      ) : (<Fragment>{cartItems}
       <div className={classes.total}>
         <span>Total Amount</span>
         <span>{totalAmount}</span>
-      </div>
-      {isCheckout && (
-        <Checkout onConfirm={submitOrderHandler} onCancel={props.onClose} />
-      )}
+      </div></Fragment>)
+      }
       {!isCheckout && modalActions}
     </Fragment>
   );
