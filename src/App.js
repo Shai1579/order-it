@@ -7,6 +7,7 @@ import Login from "./components/Auth/Login";
 import firebase from "firebase/app";
 import { Redirect, Route, Switch } from "react-router";
 import userContext from "./store/user-context";
+import Orders from "./components/Orders/Orders";
 
 function App() {
   const [cartIsShown, setCartIsShown] = useState(false);
@@ -52,7 +53,7 @@ function App() {
 
   return (
     <CartProvider>
-      {cartIsShown && <Cart onClose={hideCartHandler}></Cart>}
+      {cartIsShown && <Cart showLogin={showLoginHandler} onClose={hideCartHandler}></Cart>}
       {loginIsShown && <Login onClose={hideLoginHandler}></Login>}
       <Header
         onShowCart={showCartHandler}
@@ -65,7 +66,7 @@ function App() {
           </Route>
           {userCtx.isLoggedIn && (
             <Route path="/orders" exact>
-              <div></div>
+              <Orders></Orders>
             </Route>
           )}
           <Route path="*">

@@ -1,6 +1,6 @@
 import { Fragment, useContext, useEffect, useState } from "react";
 
-import headerImage from "../../assets/food-header.jpg";
+import headerImage from "../../assets/food-table2.jpg";
 import HeaderCartButton from './HeaderCartButton';
 import classes from "./Header.module.css";
 import HeaderGeneralButton from "../Auth/HeaderLoginButton";
@@ -31,7 +31,7 @@ const Header = (props) => {
       { isLoggedIn &&  
       <span><Burger open={isMenuOpen} onClick={onMenuClickHandler}></Burger></span>}
       <SideMenu onCloseMenu={onMenuClickHandler} open={isMenuOpen}></SideMenu>
-        <h1 >Meals</h1>
+        <h1 className={classes.title}>Order It</h1>
         <HeaderCartButton className={classes['right-button']} onClick={props.onShowCart}></HeaderCartButton>
       </header>
       <div className={classes['main-image']}>

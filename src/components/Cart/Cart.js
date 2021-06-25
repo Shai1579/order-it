@@ -4,6 +4,8 @@ import Modal from "../UI/Modal";
 import classes from "./Cart.module.css";
 import CartItem from "./CartItem/CartItem";
 import Checkout from "./Checkout";
+import UserModel from '../../model/UserModel';
+import userContext from "../../store/user-context";
 
 const Cart = (props) => {
   const [isCheckout, setIsCheckout] = useState(false);
@@ -11,6 +13,9 @@ const Cart = (props) => {
   const [didSubmit, setDidSubmit] = useState(false);
 
   const cartCtx = useContext(cartContext);
+  const userCtx = useContext(userContext);
+
+  const isLoggedIn = userCtx.isLoggedIn;
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
   const itemsAmount = cartCtx.items.reduce(
     (counter, item) => counter + item.amount,
@@ -33,14 +38,19 @@ const Cart = (props) => {
       "https://order-it-6fb76-default-rtdb.europe-west1.firebasedatabase.app/orders.json",
       {
         method: "POST",
-        body: JSON.stringify({ user: userData, orderedItems: cartCtx.items }),
+        body: JSON.stringify({ user_id: userCtx.id, orderedItems: cartCtx.items }),
       }
     );
+    await UserModel.updateUserToRealTime(userCtx.id, userData);
+    userCtx.updateUser(userData);
     setIsSubmitting(false);
     setDidSubmit(true);
     cartCtx.clearCart()
   };
-
+  const loginHandler = () => {
+    props.onClose();
+    props.showLogin();
+  }
   const cartItems = (
     <ul className={classes["cart-items"]}>
       {cartCtx.items.map((item) => (
@@ -61,7 +71,8 @@ const Cart = (props) => {
       <button onClick={props.onClose} className={classes["button--alt"]}>
         Close
       </button>
-      {itemsAmount > 0 && (
+      {!isLoggedIn && <button className={classes.button} onClick={loginHandler}>Please Login to order</button>}
+      {isLoggedIn && itemsAmount > 0 && (
         <button className={classes.button} onClick={orderHandler}>
           Order
         </button>
@@ -82,7 +93,7 @@ const Cart = (props) => {
     </Fragment>
   );
 
-  const isSubmittingModalContent = <p> Sneding order data...</p>;
+  const isSubmittingModalContent = <p> Sending order data...</p>;
   const didSubmitModalContent = (
     <Fragment>
       <p>Order Sent!</p>

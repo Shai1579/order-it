@@ -1,5 +1,5 @@
 import classes from "./MealItem.module.css";
-import headerImage from "../../../assets/food-header.jpg";
+import headerImage from "../../../assets/food-table.jpg";
 import { useContext, useState } from "react";
 import MealItemForm from "./MealItemForm";
 import cartContext from "../../../store/cart-context";
@@ -37,7 +37,7 @@ const MealItem = (props) => {
       className={liClasses}
     >
       <div className={classes["meal-image-box"]}>
-        <img className={classes["meal-image"]} alt="Meal" src={headerImage} />
+        <img className={classes["meal-image"]} alt="Meal" src={props.image || headerImage} />
       </div>
       <div className={classes["meal-data"]}>
         <div className={classes["meal-header"]}>

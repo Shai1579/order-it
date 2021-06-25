@@ -6,6 +6,7 @@ import firebase from "firebase/app";
 import 'firebase/auth';
 import userContext from "../../store/user-context";
 import Loader from "../UI/Loader";
+import UserModel from "../../model/UserModel";
 
 function isEmail(val) {
   let regEmail = /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/;
@@ -151,10 +152,16 @@ const Login = (props) => {
       let user = loginResponse.user;
       const tokenData = await user.getIdTokenResult();
       const expirationTime = new Date(tokenData.expirationTime);
+      let userData = await UserModel.getUserfromRealTime(user.uid);
+      userData = await userData.json();
+      console.log(userData)
       userCtx.setUser({
         name: user.displayName,
         id: user.uid,
         email: user.email,
+        street: userData.street,
+        city: userData.city,
+        postal: userData.postal,
         token: tokenData.token,
       }, expirationTime);
       props.onClose()
@@ -178,6 +185,8 @@ const Login = (props) => {
         displayName: `${firstName} ${lastName}`,
       });
       user = firebase.auth().currentUser;
+      console.log("qgwasv")
+      await UserModel.addUserToRealTime(user.uid, {first_name: firstName, last_name: lastName, email})
       const tokenData = await user.getIdTokenResult();
       const expirationTime = new Date(tokenData.expirationTime);
       userCtx.setUser({
@@ -223,7 +232,7 @@ const Login = (props) => {
       </div>
     </Fragment>
   );
-  const buttonClasses = classes['login-button'];
+  const buttonClasses = classes['login-button'] + ' ' + (isLoggingIn ? classes.disabled : '' );
   return (
     <Modal onClose={props.onClose} className={classes.auth}>
       <h1 className={classes.title}>{isLogin ? "Login" : "Sign Up"}</h1>
@@ -256,7 +265,7 @@ const Login = (props) => {
           </div>
         )}
         <div className={classes.actions}>
-          {!isLoggingIn ? <button className={buttonClasses} >{isLogin ? "Login" : "Create Account"}</button> : <button className={buttonClasses}><Loader></Loader></button> }
+          {!isLoggingIn ? <button className={buttonClasses} >{isLogin ? "Login" : "Register"}</button> : <button disabled className={buttonClasses}><Loader></Loader></button> }
           <button
             type="button"
             className={classes.toggle}

@@ -6,6 +6,9 @@ const defaultUserData = {
   id: null,
   name: null,
   email: null,
+  street: null,
+  city: null,
+  postal: null,
   photoUrl: null,
   token: null,
   isLoggedIn: false,
@@ -21,9 +24,17 @@ const userReducer = (state, action) => {
     updatedUser.email = action.user.email;
     updatedUser.photoUrl = action.user.photoUrl;
     updatedUser.token = action.user.token;
+    updatedUser.city = action.user.city;
+    updatedUser.postal = action.user.postal;
+    updatedUser.street = action.user.street;
     updatedUser.isLoggedIn = true;
     localStorage.setItem("user", JSON.stringify(updatedUser));
     localStorage.setItem("tokenExpirationTime", action.expirationTime);
+    return updatedUser;
+  }
+  if (action.type === "UPDATE_USER") {
+    const updatedUser = {...state, ...action.user};
+    localStorage.setItem("user", JSON.stringify(updatedUser));
     return updatedUser;
   }
   if (action.type === "LOGOUT") {
@@ -94,15 +105,22 @@ const UserProvider = (props) => {
   const clearUserHandler = () => {
     dispatchUserAction({ type: "LOGOUT" });
   };
+  const updateUserHandler = (user) => {
+    dispatchUserAction({ type: "UPDATE_USER", user });
+  };
   const userContext = {
     id: userState.id,
     name: userState.name,
     email: userState.email,
+    street: userState.street,
+    city: userState.city,
+    postal: userState.postal,
     photoUrl: userState.photoUrl,
     token: userState.token,
     isLoggedIn: isUserLoggedIn,
     setUser: setUserHandler,
     clearUser: clearUserHandler,
+    updateUser: updateUserHandler
   };
 
   useEffect(() => {

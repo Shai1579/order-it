@@ -6,9 +6,13 @@ const userContext = React.createContext({
     email: null,
     photoUrl: null,
     token: null,
+    street: null,
+    city: null,
+    postal: null,
     isLoggedIn: false,
     setUser: () => {},
-    clearUser: () => {}
+    clearUser: () => {},
+    updateUser: () => {}
 });
 
 export default userContext;

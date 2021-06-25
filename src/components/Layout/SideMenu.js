@@ -5,9 +5,15 @@ import { useContext } from "react";
 import userContext from "../../store/user-context";
 import HeaderGeneralButton from "../Auth/HeaderLoginButton";
 import FoodBagIcon from "../../assets/FoodBagIcon";
+import { useHistory, useLocation } from "react-router-dom";
+import MealsIcon from "../../assets/MealsIcon";
 
 const SideMenu = (props) => {
     const userCtx = useContext(userContext);
+    const history = useHistory();
+    const location = useLocation();
+
+    const inOrdersPage = location.pathname === "/orders";
   const addedClasses =
     classes["side-menu"] + " " + (props.open ? classes.open : "");
     const logoutUser = () => {
@@ -23,6 +29,14 @@ const SideMenu = (props) => {
           });
         
       };
+    const goToOrders = async () => {
+      props.onCloseMenu();
+      history.push("/orders");
+    };
+    const goToMeals = () => {
+      props.onCloseMenu();
+      history.push("/");
+    }
   return (
     <div className={addedClasses}>
         <span className={classes.title}>
@@ -30,7 +44,8 @@ const SideMenu = (props) => {
             Hi {userCtx.name}!
             </h4>
         </span>
-        <HeaderGeneralButton title="Orders" icon={<FoodBagIcon></FoodBagIcon>}></HeaderGeneralButton>
+        {!inOrdersPage ? <HeaderGeneralButton onClick={goToOrders} title="Orders" icon={<FoodBagIcon></FoodBagIcon>}></HeaderGeneralButton> : 
+        <HeaderGeneralButton onClick={goToMeals} title="Meals" icon={<MealsIcon></MealsIcon>}></HeaderGeneralButton>}
         <span className={classes['buttons-space']}></span>
       <HeaderGeneralButton onClick={logoutUser} title="Logout" icon={<LogoutIcon></LogoutIcon>}></HeaderGeneralButton>
     </div>

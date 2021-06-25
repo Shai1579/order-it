@@ -29,3 +29,10 @@
     text-align: center;
     color: darkred;
   }
+  
+  .category {
+    text-align: center;
+    color: white;
+    box-shadow: black 5px 5px 20px 5px;
+    background-color: #4f1f2c61;
+  }

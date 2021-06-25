@@ -27,7 +27,7 @@ const HeaderCartButton = (props) => {
   return (
     <HeaderButton
       className={props.className}
-      title="Your Cart"
+      title="Cart"
       showBadge={true}
       badgeBumber={numberOfCartItems}
       bump={bump}

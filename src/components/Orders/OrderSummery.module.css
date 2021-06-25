@@ -1,0 +1,24 @@
+.summary {
+  text-align: center;
+  max-width: 45rem;
+  width: 90%;
+  margin: auto;
+  position: relative;
+  background-color: #52362c;
+  color: white;
+  border-radius: 14px;
+  padding: 1rem;
+  margin-top: 10px;
+  box-shadow: 0 1px 18px 3px rgba(0, 0, 0, 0.25);
+}
+
+.summery-items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.summery-total {
+  margin-top: 5px;
+  place-self: flex-end;
+}

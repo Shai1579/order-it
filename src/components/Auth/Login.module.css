@@ -69,3 +69,8 @@
   width: 10em;
   height: 3em;
 }
+
+.disabled {
+  background-color: #8f6150 !important;
+  cursor: wait !important;
+}

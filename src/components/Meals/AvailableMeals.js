@@ -27,6 +27,8 @@ const AvailableMeals = () => {
           name: meals[mealId].name,
           description: meals[mealId].description,
           price: meals[mealId].price,
+          category: meals[mealId].category,
+          image: meals[mealId].image
         });
       });
       setAllMeals(tempAllMeals);
@@ -51,22 +53,35 @@ const AvailableMeals = () => {
       </section>
     );
   }
-  const mealsList = allMeals.map((meal) => {
-    return (
+  const mealsByCategory = {};
+  allMeals.forEach((meal) => {
+    if (!meal.category) {
+      meal.category = "Misc.";
+    }
+    if (!mealsByCategory[meal.category]) {
+      mealsByCategory[meal.category] = [];
+    }
+    mealsByCategory[meal.category].push(
       <MealItem
         key={meal.id}
         id={meal.id}
         name={meal.name}
         description={meal.description}
         price={meal.price}
+        image={meal.image}
       ></MealItem>
     );
   });
+  const categoriesForUI = [];
+  Object.keys(mealsByCategory).forEach((category) => {
+    categoriesForUI.push(<Card key={category}>
+      <h1 className={classes.category}>{category}</h1>
+      <ScrollMenu wheel={false} data={mealsByCategory[category]}></ScrollMenu>
+    </Card>);
+  });
   return (
     <section className={classes.meals}>
-      <Card>
-        <ScrollMenu wheel={false} data={mealsList}></ScrollMenu>
-      </Card>
+      {categoriesForUI}
     </section>
   );
 };
